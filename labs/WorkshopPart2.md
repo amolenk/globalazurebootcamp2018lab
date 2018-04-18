@@ -1,6 +1,9 @@
 # Add a Stateful Service for the Team Assembler Back-End
 
-> ## TODO TALK ABOUT BACK END 
+Now that we've moved the S.H.I.E.L.D. HRM system to the cloud, it's time to add some functionality.
+We want to let users create different team configurations of characters and shows some stats for the assembled teams.
+The first service you'll build for this scenario is a back-end service that will store the assembled teams along with the stats retrieved from the HRM system.
+To minimize complexity and latency, we'll use a Service Fabric Stateful Reliable Service instead of an external data store.
 
 ## Basic Concepts
 
@@ -22,8 +25,6 @@ In the same "TeamAssembler" application, you can add a new service by right-clic
 Select **.NET Core 2.0 -> Stateful ASP.NET Core** and name it "BackEnd". Click **OK**.
 
 In the **New ASP.NET Core Web Application** dialog, select **API**. Click **OK**.
-
-
 
 Open the *BackEnd.cs* file in the service project. In Service Fabric, a service can run any business logic. The service API provides two entry points for your code:
 
@@ -241,14 +242,4 @@ Reliable Collections have many of the same operations that their `System.Collect
 
 Reliable Collection operations are `transactional`, so that you can keep state consistent across multiple Reliable Collections and operations. For example, you may dequeue a work item from a Reliable Queue, perform an operation on it, and save the result in a Reliable Dictionary, all within a single transaction. This is treated as an atomic operation, and it guarantees that either the entire operation will succeed or the entire operation will roll back. If an error occurs after you dequeue the item but before you save the result, the entire transaction is rolled back and the item remains in the queue for processing.
 
-## Run the application
-
-We now return to the TeamAssembler application. You can now build and redeploy your services to the party cluster.
-
-# Implement the Team Assembler front end
-
-> ## TODO TALK ABOUT FRONT END 
-
-- Add some pictures
-- Simply copy/paste entire service and add it to solution?
 
