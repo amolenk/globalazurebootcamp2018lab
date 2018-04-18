@@ -1,0 +1,93 @@
+@{
+    ViewData["Title"] = "Avengers Team Assembler";
+}
+
+<div ng-controller="TeamAssemblerController" ng-init="init()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2 text-center">
+                <h2>Avengers Team Assembler</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <form>
+                    <div>
+                        <input type="text" ng-model="teamName"/>
+                    </div>
+                    <div>
+                        <span ng-repeat="member in members">
+                            <span style="white-space:nowrap;">
+                                <input type="checkbox" id="{{member}}" class="checkbox-inline" ng-model="selectedMembers[member]" />
+                                <label for="{{member}}">{{member}}</label>
+                            </span>
+                        </span>
+                    </div>
+                    <div>
+                        <button id="btnAssemble" class="btn btn-default" ng-click="assemble()">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Assemble!
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="row">
+                    <div class="col-xs-4">
+                        Teams:
+                    </div>
+                </div>
+
+                <div class="panel panel-default" ng-repeat="team in teams">
+                    <div class="panel-heading">
+                        {{team.name}} Power Rating
+                        <button type="button" class="close" ng-click="remove(team.name)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td>Members:</td>
+                            <td>{{team.members}}</td>
+                        </tr>
+                        <tr>
+                            <td>Score:</td>
+                            <td>{{team.score}}</td>
+                        </tr>
+                        <tr>
+                            <td>Intelligence:</td>
+                            <td>{{team.powerGrid.intelligence}}: {{renderIntelligence(team.powerGrid.intelligence)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Strength:</td>
+                            <td>{{team.powerGrid.strength}}: {{renderStrength(team.powerGrid.strength)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Speed:</td>
+                            <td>{{team.powerGrid.speed}}: {{renderSpeed(team.powerGrid.speed)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Durability:</td>
+                            <td>{{team.powerGrid.durability}}: {{renderDurability(team.powerGrid.durability)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Energy Projection:</td>
+                            <td>{{team.powerGrid.energyProjection}}: {{renderEnergyProjection(team.powerGrid.energyProjection)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fighting Skills:</td>
+                            <td>{{team.powerGrid.fightingSkills}}: {{renderFightingSkills(team.powerGrid.fightingSkills)}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
