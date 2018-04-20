@@ -220,6 +220,24 @@ Reliable Collections make your data highly available by *replicating* state acro
 
 The Reliable State Manager manages Reliable Collections for you. You can simply ask the Reliable State Manager for a reliable collection by name at any time and at any place in your service. The Reliable State Manager ensures that you get a reference back. It is not recommended to save references to reliable collection instances in class member variables or properties. Special care must be taken to ensure that the reference is set to an instance at all times in the service lifecycle. The Reliable State Manager handles this work for you, and it's optimized for repeat visits.
 
+## Configure partitioning
+
+Service Fabric makes it easy to develop scalable stateful services by offering a first-class way to partition state (data) (see [here](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-concepts-partitioning) for more info on partitioning).
+
+In this application you'll partition the teams data based on the first letter of the team name (so that will give you at most 26 partitions).
+
+Open the *ApplicationManifest.xml* file in the Service Fabric hosting project.
+
+Navigate to the *DefaultServices* element. Set the values of the **LowKey** and **HighKey** properties to respectively 0 and 25 (we'll use zero-based indexing here, A => 0, B => 1 etc).
+
+```xml
+<Service Name="BackEnd" ServicePackageActivationMode="ExclusiveProcess">
+  <StatefulService ServiceTypeName="BackEndType" TargetReplicaSetSize="[BackEnd_TargetReplicaSetSize]" MinReplicaSetSize="[BackEnd_MinReplicaSetSize]">
+    <UniformInt64Partition PartitionCount="[BackEnd_PartitionCount]" LowKey="0" HighKey="25" />
+  </StatefulService>
+</Service>
+```
+
 ## Transactional and asynchronous operations
 
 Consider the `Put` method in the `TeamsController`:
@@ -241,5 +259,3 @@ public async Task Put(string name, [FromBody]Team team)
 Reliable Collections have many of the same operations that their `System.Collections.Generic` and `System.Collections.Concurrent` counterparts do, except LINQ. Operations on Reliable Collections are asynchronous. This is because write operations with Reliable Collections perform I/O operations to replicate and persist data to disk.
 
 Reliable Collection operations are `transactional`, so that you can keep state consistent across multiple Reliable Collections and operations. For example, you may dequeue a work item from a Reliable Queue, perform an operation on it, and save the result in a Reliable Dictionary, all within a single transaction. This is treated as an atomic operation, and it guarantees that either the entire operation will succeed or the entire operation will roll back. If an error occurs after you dequeue the item but before you save the result, the entire transaction is rolled back and the item remains in the queue for processing.
-
-
