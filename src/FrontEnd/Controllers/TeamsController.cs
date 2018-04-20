@@ -116,7 +116,7 @@ namespace FrontEnd.Controllers
 
             EmployeeServiceClient client = new EmployeeServiceClient(
                 EmployeeServiceClient.EndpointConfiguration.BasicHttpBinding_IEmployeeService,
-                "http://shieldhrm.teamassembler:83/EmployeeService.svc/EmployeeService");
+                "http://shieldhrm.teamassembler:8080/EmployeeService.svc/EmployeeService");
 
             try
             {
