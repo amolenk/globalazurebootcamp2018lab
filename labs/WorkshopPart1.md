@@ -46,7 +46,7 @@ Configure the container port-to-host port mapping so that incoming requests to t
 
 ## Register a DNS name for the service
 
-We must register a DNS name for the service so that the front-end service will know where to find it.
+We must [register a DNS name](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-dnsservice) for the service so that the front-end service will know where to find it.
 
 Open the *ApplicationManifest.xml* file and locate the *DefaultServices* element. It should contain an inner *Service* element for the "ShieldHRM" service:
 
