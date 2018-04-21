@@ -44,6 +44,28 @@ Configure the container port-to-host port mapping so that incoming requests to t
 </ServiceManifestImport>
 ```
 
+## Register a DNS name for the service
+
+We must register a DNS name for the service so that the front-end service will know where to find it.
+
+Open the *ApplicationManifest.xml* file and locate the *DefaultServices* element. It should contain an inner *Service* element for the "ShieldHRM" service:
+
+```xml
+<Service Name="ShieldHRM" ServiceDnsName="shieldhrm.teamassembler" ServicePackageActivationMode="ExclusiveProcess">
+  <StatelessService ServiceTypeName="ShieldHRMType" InstanceCount="[ShieldHRM_InstanceCount]">
+    <SingletonPartition />
+  </StatelessService>
+</Service>
+```
+
+Add a *ServiceDnsName* property to the *Service* element and assign it the value of "shieldhrm.teamassembler":
+
+```xml
+<Service Name="ShieldHRM" ServicePackageActivationMode="ExclusiveProcess" ServiceDnsName="shieldhrm.teamassembler">
+    ...
+</Service>
+```
+
 ## Create a cluster
 
 To deploy the application to a cluster in Azure, you can join a party cluster. Party clusters are free, limited-time Service Fabric clusters hosted on Azure and run by the Service Fabric team where anyone can deploy applications and learn about the platform. The cluster uses a single self-signed certificate for-node-to node as well as client-to-node security. Party clusters support containers. If you decide to set up and use your own cluster, the cluster must be running on a SKU that supports containers (such as Windows Server 2016 Datacenter with Containers).
